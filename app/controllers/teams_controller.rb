@@ -1,12 +1,11 @@
 class TeamsController < ApplicationController
-    before_action :get_team, only: [:show, :edit, :destroy]
+    before_action :get_team, only: [:show, :edit, :destroy, :update]
     def index
         teams = Team.all
         render json: teams, include: [:user]
     end
 
     def create
-        binding.pry
         @team = Team.new(strong_params)
         if @team.save
             render json: @team, status: :created
@@ -19,8 +18,20 @@ class TeamsController < ApplicationController
         render json: @team, include: [:user, :superheros]
     end
 
+    
+    def update
+        
+        @team.update(strong_params)
+        if @team.save
+            render json: @team, status: :created
+        else
+            render json: @team.errors.full_messages, status: :unprocessable_entity
+        end
+    end
+
     def destroy
         binding.pry
+        
         @team.destroy
     end
 

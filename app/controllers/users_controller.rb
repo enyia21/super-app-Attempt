@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     def update
         @user.update(strong_params)
         if @user.save
-            render json: @user, status: :created
+            render json: @user, include: [:teams, :superheros], status: :created
         else
             render json: @user.errors.full_messages, status: :unprocessable_entity
         end
