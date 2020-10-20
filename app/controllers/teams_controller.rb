@@ -30,9 +30,8 @@ class TeamsController < ApplicationController
     end
 
     def destroy
-        binding.pry
-        
         @team.destroy
+        render :json => {:status => "Success!"}
     end
 
     private 
